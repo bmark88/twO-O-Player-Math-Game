@@ -7,6 +7,11 @@ module Questions
       @title = title
       @answer = answer
     end
+
+    def update_question(title, answer)
+      self.title = title
+      self.answer = answer
+    end
   end
 
 end

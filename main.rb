@@ -12,4 +12,7 @@ q1 = Question.new('What is 1 + 1?', 2)
 puts q1.title
 puts q1.answer
 
+q1.update_question('What is 3 + 3?', 6)
+puts q1.title
+puts q1.answer
 # player1.lives
