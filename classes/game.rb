@@ -16,11 +16,12 @@ module GameData
     end
 
     def start
-      puts "~~~~~~~~GAME STARTING~~~~~~~~"
+      puts "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
       puts "Player #{@player1.id} starts with #{@player1.lives} lives."
       puts "Player #{@player2.id} starts with #{@player2.lives} lives."
       @in_progress = true
       puts "Player #{@current_player.id} will start. Let the games begin!"
+      puts "~~~~~~~~GAME STARTING~~~~~~~~"
 
       while @player1.lives > 0 && @player2.lives > 0
         
@@ -32,12 +33,14 @@ module GameData
             puts "NEXT QUESTION!!"
             self.switch_player
             puts "Player #{@current_player.id}, it's your turn. Be careful, you have #{@current_player.lives} lives remaining."
+            puts "~~~~~~~~~~~~"
           end
         else 
           puts "~~~~~~~~~~~~"
           puts "NEXT QUESTION!!"
           self.switch_player
           puts "Player #{@current_player.id}, it's your turn. Be careful, you have #{@current_player.lives} lives remaining."
+          puts "~~~~~~~~~~~~"
         end
       end
 
