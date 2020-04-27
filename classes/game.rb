@@ -3,28 +3,53 @@ module GameData
   class Game
     attr_accessor :start
 
-    def initialize
+    def initialize(player1, player2)
       @in_progress = false
+      @current_player = player1
+      @player1 = player1
+      @player2 = player2
     end
 
-    def start(player1, player2)
-      puts "~~~~~~~~GAME STARTING~~~~~~~~"
-      puts "Player #{player1.id} starts with #{player1.lives} lives."
-      puts "Player #{player2.id} starts with #{player2.lives} lives."
-      @in_progress = true 
+    def switch_player
+      @current_player == @player1 ? 
+      @current_player = @player2 : @current_player = @player1
+    end
 
-      while player1.lives > 0 && player2.lives > 0 
+    def start
+      puts "~~~~~~~~GAME STARTING~~~~~~~~"
+      puts "Player #{@player1.id} starts with #{@player1.lives} lives."
+      puts "Player #{@player2.id} starts with #{@player2.lives} lives."
+      @in_progress = true
+      puts "Player #{@current_player.id} will start. Let the games begin!"
+
+      while @player1.lives > 0 && @player2.lives > 0
         
         if ask_addition_question === false
-          player1.lose_life
-          puts "Player #{player1.id} has #{player1.lives} lives remaining."
+          @current_player.lose_life
+          if @current_player.lives >= 1
+            puts "Player #{@current_player.id} has #{@current_player.lives} lives remaining."
+            puts "~~~~~~~~~~~~"
+            puts "NEXT QUESTION!!"
+            self.switch_player
+            puts "Player #{@current_player.id}, it's your turn. Be careful, you have #{@current_player.lives} lives remaining."
+          end
+        else 
+          puts "~~~~~~~~~~~~"
+          puts "NEXT QUESTION!!"
+          self.switch_player
+          puts "Player #{@current_player.id}, it's your turn. Be careful, you have #{@current_player.lives} lives remaining."
         end
       end
 
       @in_progress = false
+
       if @in_progress == false
-        puts "Game over!"
-      end
+        if @player1.lives > @player2.lives
+          puts "Player #{@player1.id} wins!"
+        else
+          puts "Player #{@player2.id} wins!"
+        end
+      end 
     end
 
     def in_progress?
@@ -42,7 +67,11 @@ module GameData
         puts "CORRECT! You get to keep your current lives."
         true
       else
-        puts "WRONG! You lose one life."
+        if @current_player.lives == 1
+          puts "You've run out of lives."
+        else
+          puts "WRONG! You lose one life."
+        end
         false
       end
     end
